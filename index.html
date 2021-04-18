@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="words.js"></script>
+        <script src="https://unpkg.com/js-markov/dist/markov.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <p id="word"></p>
+        <input type="button" id="generate" value="Genera nuova parola" />
+    </body>
+    
+    <script>
+        var c = new Markov();
+        words.forEach(element => {
+        var splitted = element.split('').reduce((a, e, i)=> a + e + " ", '');
+            c.addStates(splitted);
+        });
+
+        c.setOrder(5);
+        c.train();
+        $("#generate").click(() => {
+            var newWorld = c.generateRandom(50);
+            console.log(newWorld);
+            $("#word").text(newWorld);
+        });
+    </script>
+</html>
